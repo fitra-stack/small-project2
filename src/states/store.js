@@ -5,7 +5,7 @@ const rootReducers = combineReducers({
     add: addItem,
 })
 
-const store = createStore( rootReducers )
+const store = createStore( rootReducers );
 
 
 export default { store }

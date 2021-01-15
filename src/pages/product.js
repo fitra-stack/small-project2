@@ -129,5 +129,5 @@ const mapStateToProps = (props) => {
   }
   
   // connect = menghubungkan & inisialisasi props store dan function redux
-//   export default connect(mapStateToProps, mapDispatchtoProps)(Product);
-  export {Product}
+export default connect(mapStateToProps, mapDispatchtoProps)(Product);
+//   export {Product}
