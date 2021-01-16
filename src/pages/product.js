@@ -9,26 +9,30 @@ import { faShoppingCart } from '@fortawesome/free-solid-svg-icons';
 import  { useState } from 'react';
 import { loremIpsum } from 'react-lorem-ipsum';
 import { connect } from 'react-redux';
+import productReducer from '../reducers/productReducer';
+import { Link } from 'react-router-dom';
 
-const productLists = [{
-    productId : 1,
-    productDesc : "Lorem, ipsum dolor sit amet consectetur adipisicing elit Tenetur dolor saepe, blanditiis modi perferendis reiciendis Nostrum quasi suscipit vitae ducimus harum culpa et distinctio sequi voluptas maiores", 
-    productPrice : 20,
-},
-{
-    productId : 2,
-    productDesc : "Casual",
-    productPrice : 21,
+// baris comment dibawah uda gak kepake karena uda pake reducer products, jadi uda gak local dari hal Infinity, ini dipake kalo local, nyambung di setProducts line 34
+// const productLists = [{
+//     productId : 1,
+//     productDesc : "Lorem, ipsum dolor sit amet consectetur adipisicing elit Tenetur dolor saepe, blanditiis modi perferendis reiciendis Nostrum quasi suscipit vitae ducimus harum culpa et distinctio sequi voluptas maiores", 
+//     productPrice : 20,
+// },
+// {
+//     productId : 2,
+//     productDesc : "Casual",
+//     productPrice : 21,
 
-},
-{
-    productId : 3,
-    productDesc : "Jeans",
-    productPrice : 22,
+// },
+// {
+//     productId : 3,
+//     productDesc : "Jeans",
+//     productPrice : 22,
 
-}]
-const Product = ({ count, addItem, minItem }) => {
-    const [products, setProducts] = useState(productLists);
+// }]
+const Product = ({ products,count, addItem, minItem, getItem }) => {
+    // baris dibawah ini uda gak kepake soalnya uda ambil dari productReducer, cek products di mapStateToProps atau di param baris atas ini
+    // const [products, setProducts] = useState(productLists);
     const [productIndex, setProductIndex] = useState(0);
     return(
         <div>
@@ -39,8 +43,13 @@ const Product = ({ count, addItem, minItem }) => {
                         <div className="col-md-6">
                             <div>
                                 <img src= { productIndex === 0 ? catalog : productIndex === 1 ? catalog2 : catalog3 }  style={{ width: 523, height: 567 }}  alt="" />
-                                <button className="btn-shop x" onClick={() => setProductIndex(productIndex - 1 )}>&#8249;</button>
-                                <button className="btn-shop y" onClick={() => setProductIndex(productIndex + 1 )}> &#8250;</button>
+                                {/* <img src= { products.productId === 1 ? catalog : catalog2 }  style={{ width: 523, height: 567 }}  alt="" /> */}
+                                {productIndex !== 0 && (
+                                    <button className="btn-shop x" onClick={() => setProductIndex(productIndex - 1 )}>&#8249;</button>
+                                )}
+                                {productIndex !== products.length - 1 && (
+                                    <button className="btn-shop y" onClick={() => setProductIndex(productIndex + 1 )}> &#8250;</button>
+                                )}
                             </div>
                         </div>
                         <div className="col-md-6">
@@ -52,7 +61,9 @@ const Product = ({ count, addItem, minItem }) => {
                             </div>
                             <div className="row">
                                 <div className="col-md" style={{borderRight: 1 , borderRightColor: "#E7F0F2" }}>
-                                    <p className="go" >GO BACK</p>  
+                                    <Link to="/" style={{ textDecoration: 'none'}}>
+                                        <p className="go" style={{color: 'black'}} >GO BACK</p>  
+                                    </Link>
                                 </div>
                             </div>
                             <div className="row">
@@ -88,7 +99,7 @@ const Product = ({ count, addItem, minItem }) => {
                             </div>
                             <div className="row">
                                 <div className="col-md">
-                                    <button className="btn-shop" style={{paddingTop: 14 , paddingBottom : 14, paddingLeft : 33, paddingRight : 33 }}>ADD TO CART</button>
+                                    <button className="btn-shop" style={{paddingTop: 14 , paddingBottom : 14, paddingLeft : 33, paddingRight : 33 }} onClick={() => addItem()}>ADD TO CART</button>
                                     <p>{count}</p>
                                 </div>
                             </div>
@@ -110,8 +121,10 @@ const Product = ({ count, addItem, minItem }) => {
 }
 
 const mapStateToProps = (props) => {
+    console.log('tes', props)
     return {
       count: props.add.counter,
+      products: props.product.products
     }
   }
   
@@ -123,6 +136,10 @@ const mapStateToProps = (props) => {
       }),
       minItem: (value) => dispatch({
         type: 'MIN',
+        value,
+      }),
+      getItem: (value) => dispatch({
+        type: 'GET_ITEM',
         value,
       })
     }
