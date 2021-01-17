@@ -10,6 +10,7 @@
     padding-top: 1px;
     padding-bottom: 35px;
 }
+
 .container-css{
     margin: 68px 70px 20px; 
     
@@ -195,6 +196,11 @@ span{
 .container-full-product{
     background-color: rgba(231, 240, 242, 0.3); 
     background-image: linear-gradient(to right ,rgba(231, 240, 242, 0.3) 40%, #ffffff 40%);
+    margin-top: 0px;
+}
+.container-full-basket{
+    background-color: rgba(231, 240, 242, 0.3); 
+    background-image: linear-gradient(to right ,rgba(231, 240, 242, 0.3) 40%, #ffffff 50%);
     margin-top: 0px;
 }
 

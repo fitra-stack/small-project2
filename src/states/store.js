@@ -4,6 +4,7 @@ import productReducer from '../reducers/productReducer';
 
 const rootReducers = combineReducers({
     add: addItem,
+    slide: addItem,
     product: productReducer,
 });
 

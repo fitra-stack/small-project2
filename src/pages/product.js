@@ -1,16 +1,16 @@
 import '../css/style.css';
 import '../App.css';
-import catalog from '../img/catalog.png';
-import catalog2 from '../img/catalog2.jpg';
-import catalog3 from '../img/catalog3.jpg';
 import footer from '../img/group.svg';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faShoppingCart } from '@fortawesome/free-solid-svg-icons';
+import { faPlus } from '@fortawesome/free-solid-svg-icons';
+import { faMinus } from '@fortawesome/free-solid-svg-icons';
 import  { useState } from 'react';
 import { loremIpsum } from 'react-lorem-ipsum';
 import { connect } from 'react-redux';
 import productReducer from '../reducers/productReducer';
 import { Link } from 'react-router-dom';
+import productLists from './data'
 
 // baris comment dibawah uda gak kepake karena uda pake reducer products, jadi uda gak local dari hal Infinity, ini dipake kalo local, nyambung di setProducts line 34
 // const productLists = [{
@@ -30,10 +30,18 @@ import { Link } from 'react-router-dom';
 //     productPrice : 22,
 
 // }]
-const Product = ({ products,count, addItem, minItem, getItem }) => {
+const Product = ({ products, count, slide , basket, addItem, minItem, slideItem, slideItem2, basketItem }) => {
     // baris dibawah ini uda gak kepake soalnya uda ambil dari productReducer, cek products di mapStateToProps atau di param baris atas ini
     // const [products, setProducts] = useState(productLists);
-    const [productIndex, setProductIndex] = useState(0);
+    // const [productIndex, setProductIndex] = useState(0);
+    //console.log(data)
+    localStorage.setItem('dataProduct', JSON.stringify(productLists));
+    const items = JSON.parse(localStorage.getItem('items'))
+    const dataProduct = JSON.parse(localStorage.getItem('dataProduct'))
+    const allQty = items.map(qty => qty.quantity)
+    const totalQty = allQty.reduce(function(acc, val) { return acc + val; }, 0)
+    console.log(totalQty,"tototototo")
+    
     return(
         <div>
             <div className="container-full-product">
@@ -42,21 +50,25 @@ const Product = ({ products,count, addItem, minItem, getItem }) => {
                     <div className="row">
                         <div className="col-md-6">
                             <div>
-                                <img src= { productIndex === 0 ? catalog : productIndex === 1 ? catalog2 : catalog3 }  style={{ width: 523, height: 567 }}  alt="" />
+                                <img src= { dataProduct[slide].productImg }  style={{ width: 523, height: 567 }}  alt="" />
                                 {/* <img src= { products.productId === 1 ? catalog : catalog2 }  style={{ width: 523, height: 567 }}  alt="" /> */}
-                                {productIndex !== 0 && (
-                                    <button className="btn-shop x" onClick={() => setProductIndex(productIndex - 1 )}>&#8249;</button>
-                                )}
-                                {productIndex !== products.length - 1 && (
-                                    <button className="btn-shop y" onClick={() => setProductIndex(productIndex + 1 )}> &#8250;</button>
-                                )}
+                                {/* {productIndex !== 0 && ( */}
+                                    {/* <button className="btn-shop x" onClick={() => setProductIndex(productIndex - 1 )}>&#8249;</button> */}
+                                    <button className="btn-shop x" onClick={() => slideItem2()}>&#8249;</button>
+                                {/* )} */}
+                                {/* {productIndex !== products.length - 1 && ( */}
+                                    <button className="btn-shop y" onClick={() => slideItem()}> &#8250;</button>
+                                {/* )} */}
                             </div>
                         </div>
                         <div className="col-md-6">
                             <div className="row">
                                 <div className="col-md-6"></div>
                                 <div className="col-md-6" >
-                                    <FontAwesomeIcon icon={faShoppingCart} style={{float: "right" , marginRight : 27 }} />
+                                    <Link to="/basket" style={{ textDecoration: 'none'}}>
+                                        <FontAwesomeIcon icon={faShoppingCart} style={{float: "right" , color : "black", marginRight : 27 }} />
+                                    </Link>
+                                    <p style={{float: "right", zIndex:1 }}>{totalQty}</p>
                                 </div>
                             </div>
                             <div className="row">
@@ -69,15 +81,15 @@ const Product = ({ products,count, addItem, minItem, getItem }) => {
                             <div className="row">
                                 <div className="col-md">
                                     <p className="color">Color</p>
-                                    <p className="item">Item Type / Name</p>
+                                    <p className="item">{products[slide].productName}</p>
                                 </div>
                             </div>
                             <div className="row">
                                 <div className="col-md">
-                                    <p className="price">${products[productIndex].productPrice}</p>
+                                    <p className="price">${products[slide].productPrice}</p>
                                     <p className="normal-price">$39.99</p>
                                     <p className="content">Kacamata tampan dan berani</p>
-                                    <p className="desc">{products[productIndex].productDesc}</p>
+                                    <p className="desc">{products[slide].productDesc}</p>
                                     <div className="row">
                                         <div className="col-md-1">
                                             <p className="size">Size: </p>
@@ -93,14 +105,32 @@ const Product = ({ products,count, addItem, minItem, getItem }) => {
                                         </div>
                                     </div>
                                     
+                                    
+                                </div>
+                            </div>
+                            <div className="row">
+                                <div className="col-md-6">
+                                    <FontAwesomeIcon icon={faMinus} style={{ fontSize: 14 }} />
+                                    <p style={{display:'inline' , marginLeft:9, marginRight:9}}>{basket.length}</p>
+                                    <FontAwesomeIcon icon={faPlus} style={{ fontSize: 14 }} />
+                                </div>
+                                <div className="col-md-6">
                                     <p className="size" style={{ textAlign: 'right' , marginBottom: 0 , paddingRight : 0 }}>Mens</p>
-                                    <p className="size" style={{ textAlign: 'right' , marginBottom: 0 , paddingRight : 0 }}>100% Cotton</p>
+                                    <p className="size" style={{ textAlign: 'right' , marginBottom: 0 , paddingRight : 0 }}>{products[slide].productMaterial}</p>
                                 </div>
                             </div>
                             <div className="row">
                                 <div className="col-md">
-                                    <button className="btn-shop" style={{paddingTop: 14 , paddingBottom : 14, paddingLeft : 33, paddingRight : 33 }} onClick={() => addItem()}>ADD TO CART</button>
-                                    <p>{count}</p>
+                                    <button className="btn-shop" style={{paddingTop: 14 , paddingBottom : 14, paddingLeft : 33, paddingRight : 33 }} 
+                                    onClick={() => basketItem({
+                                        productId : dataProduct[slide].productId,
+                                        productDesc : dataProduct[slide].productDesc,
+                                        productPrice : dataProduct[slide].productPrice,
+                                        productImg : dataProduct[slide].productImg,
+                                        productName : dataProduct[slide].productName,
+                                        productMaterial : dataProduct[slide].productMaterial,
+                                    }
+                                    )}>ADD TO CART</button>
                                 </div>
                             </div>
                         </div>
@@ -121,10 +151,16 @@ const Product = ({ products,count, addItem, minItem, getItem }) => {
 }
 
 const mapStateToProps = (props) => {
-    console.log('tes', props)
+    // console.log('tes', props)
+    // console.log('props basket', props['product']['basket'])
+    localStorage.setItem('items', JSON.stringify(props['product']['basket']));
+    localStorage.setItem('totalItems', JSON.stringify(props['product']['total']));
+    localStorage.setItem('totalQuantity', JSON.stringify(props['product']['quantity']));
     return {
       count: props.add.counter,
-      products: props.product.products
+      products: props.product.products,
+      basket: props.product.basket,
+      slide: props.slide.slide,
     }
   }
   
@@ -138,9 +174,15 @@ const mapStateToProps = (props) => {
         type: 'MIN',
         value,
       }),
-      getItem: (value) => dispatch({
-        type: 'GET_ITEM',
-        value,
+      slideItem: () => dispatch({
+        type: 'SLIDE',
+      }),
+      slideItem2: () => dispatch({
+        type: 'SLIDE_MIN',
+      }),
+      basketItem: (bebas) => dispatch({
+        type: 'ADD_ITEM',
+        product: bebas,
       })
     }
   }

@@ -1,5 +1,6 @@
 const initialState = {
     counter: 0,
+    slide: 0
   }
 
 const rootReducer = (state = initialState, action) => {
@@ -10,11 +11,35 @@ const rootReducer = (state = initialState, action) => {
         counter: state.counter + 1
       }
     }
-    if (action.type === 'MIN') 
+
+    if (action.type === 'SLIDE') 
     {
-      return {
-        ...state,
-        counter: state.counter - 1
+      if (state.slide === 2)
+      {
+        return {
+          ...state,
+          slide: state.slide - 2
+        }
+      }else{
+        return {
+          ...state,
+          slide: state.slide + 1
+        }
+      }
+    }
+    if (action.type === 'SLIDE_MIN') 
+    {
+      if (state.slide === 0)
+      {
+        return {
+          ...state,
+          slide: state.slide + 2
+        }
+      }else{
+        return {
+          ...state,
+          slide: state.slide - 1
+        }
       }
     }
     return state;
