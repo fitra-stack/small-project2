@@ -18,7 +18,7 @@ const productReducer = (state = initialState, action) => {
     if (action.type === 'ADD_ITEM') 
     {
       let allItems = JSON.parse(localStorage.getItem('items'))
-      console.log(state.total, "allitemss")
+      console.log(state.basket, "allitemss")
       //console.log("action", action.product.productId)
       let addedItem = state.products.find(item=> item.productId === action.product.productId)
       let existed_item= allItems.find(item => item.productId === action.product.productId) 

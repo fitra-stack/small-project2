@@ -34,26 +34,28 @@ const Basket = ({ count, total, basket, addItem, addQty, minQty, delItem, minIte
                                     <br></br>
                                 </div>
                                 <div className="col-md-6">
-                                    <div className="row">
-                                        <p>Name : {item.productName}</p>
+                                    <div className="row" >
+                                        <p style={{marginBottom : 1}}>Name : {item.productName}</p>
                                     </div>
                                     <div className="row">
-                                        <p>Price : ${item.productPrice}</p>
+                                        <p style={{marginBottom : 1}}>Price : ${item.productPrice}</p>
                                     </div>
                                     <div className="row">
                                         <p>Material : {item.productMaterial}</p>
-                                    </div>
+                                    </div >
                                     {/* <div className="row">
                                         <p>Description : {item.productDesc}</p>
                                     </div> */}
                                     <div className="row">
-                                        <p>Qty : 
+                                        <p style={{marginBottom : 1}}>Qty : 
                                             <FontAwesomeIcon icon={faMinus} style={{ fontSize: 14, marginRight:12, marginLeft:4 }} onClick={() => minQty(item.productId)} />
                                             {item.quantity}
                                             <FontAwesomeIcon icon={faPlus} style={{ fontSize: 14 , marginLeft:12}} onClick={() => addQty(item.productId)}/>
                                         </p>
                                     </div>
-                                    <button onClick={() => delItem(item.productId)}>Remove</button>
+                                    <div className="row ">
+                                        <button className="btn btn-danger" style={{paddingTop:1, paddingBottom:1}} onClick={() => delItem(item.productId)}>Remove</button>
+                                    </div>
                                 </div>
                             </div>
                             ))}
@@ -86,7 +88,7 @@ const Basket = ({ count, total, basket, addItem, addQty, minQty, delItem, minIte
                                 </div>
                             </div>
                             
-                            <div  className="row">
+                            {/* <div  className="row">
                                 <div className="col-md-6">
                                     <FontAwesomeIcon icon={faMinus} style={{ fontSize: 14 }} />
                                     <p style={{display:'inline' , marginLeft:9, marginRight:9}}>{totalQty}</p>
@@ -96,32 +98,32 @@ const Basket = ({ count, total, basket, addItem, addQty, minQty, delItem, minIte
                                     <p className="size" style={{ textAlign: 'right' , marginBottom: 0 , paddingRight : 0 }}>Mens</p>
                                     <p className="size" style={{ textAlign: 'right' , marginBottom: 0 , paddingRight : 0 }}>100% Cotton</p>
                                 </div>
-                            </div>
-                            <div className="row">
+                            </div> */}
+                            {/* <div className="row">
                                 <div className="col-md">
                                     <button className="btn-shop" style={{paddingTop: 14 , paddingBottom : 14, paddingLeft : 33, paddingRight : 33 }} 
->ADD TO CART</button>
+                                    >ADD TO CART</button>
                                 </div>
-                            </div>
+                            </div> */}
                         </div>
                     </div>
                 </div>
                 <hr/>
             </div>
-            <div className="container-fluid" style={{ marginTop : 0 }}>
+            {/* <div className="container-fluid" style={{ marginTop : 0 }}>
                 <div className="row">
                     <div className="footer">
                         <img src={footer} alt=""/>
                     </div>
                 </div>
-            </div>
+            </div> */}
         </div>
 
     )
 }
 
 const mapStateToProps = (props) => {
-    //console.log('props basket', props['product']['basket'])
+    console.log('props basket', props['product']['basket'])
     // let x = Array (props['product']['total'])
     // localStorage.setItem('Items', JSON.stringify(props['product']['basket']));
     return {

@@ -68,7 +68,7 @@ const Product = ({ products, count, slide , basket, addItem, minItem, slideItem,
                                     <Link to="/basket" style={{ textDecoration: 'none'}}>
                                         <FontAwesomeIcon icon={faShoppingCart} style={{float: "right" , color : "black", marginRight : 27 }} />
                                     </Link>
-                                    <p style={{float: "right", zIndex:1 }}>{totalQty}</p>
+                                        <p style={{float: "right", zIndex:1 }}>{totalQty}</p>
                                 </div>
                             </div>
                             <div className="row">
@@ -110,9 +110,9 @@ const Product = ({ products, count, slide , basket, addItem, minItem, slideItem,
                             </div>
                             <div className="row">
                                 <div className="col-md-6">
-                                    <FontAwesomeIcon icon={faMinus} style={{ fontSize: 14 }} />
-                                    <p style={{display:'inline' , marginLeft:9, marginRight:9}}>{basket.length}</p>
-                                    <FontAwesomeIcon icon={faPlus} style={{ fontSize: 14 }} />
+                                    {/* <FontAwesomeIcon icon={faMinus} style={{ fontSize: 14 }} /> */}
+                                    {/* <p style={{display:'inline' , marginLeft:9, marginRight:9}}>{totalQty}</p> */}
+                                    {/* <FontAwesomeIcon icon={faPlus} style={{ fontSize: 14 }} /> */}
                                 </div>
                                 <div className="col-md-6">
                                     <p className="size" style={{ textAlign: 'right' , marginBottom: 0 , paddingRight : 0 }}>Mens</p>
@@ -121,6 +121,7 @@ const Product = ({ products, count, slide , basket, addItem, minItem, slideItem,
                             </div>
                             <div className="row">
                                 <div className="col-md">
+                                    <Link>
                                     <button className="btn-shop" style={{paddingTop: 14 , paddingBottom : 14, paddingLeft : 33, paddingRight : 33 }} 
                                     onClick={() => basketItem({
                                         productId : dataProduct[slide].productId,
@@ -131,6 +132,8 @@ const Product = ({ products, count, slide , basket, addItem, minItem, slideItem,
                                         productMaterial : dataProduct[slide].productMaterial,
                                     }
                                     )}>ADD TO CART</button>
+                                    </Link>
+                                   
                                 </div>
                             </div>
                         </div>
@@ -152,7 +155,7 @@ const Product = ({ products, count, slide , basket, addItem, minItem, slideItem,
 
 const mapStateToProps = (props) => {
     // console.log('tes', props)
-    // console.log('props basket', props['product']['basket'])
+    console.log('props basket', props['product']['basket'])
     localStorage.setItem('items', JSON.stringify(props['product']['basket']));
     localStorage.setItem('totalItems', JSON.stringify(props['product']['total']));
     localStorage.setItem('totalQuantity', JSON.stringify(props['product']['quantity']));
